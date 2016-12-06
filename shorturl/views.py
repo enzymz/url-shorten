@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.shortcuts import render
 from django.views import View
 from django.core.validators import URLValidator
@@ -9,7 +9,7 @@ import hashlib
 import random
 
 from .forms import UrlForm
-from .models import UrlShort
+from .models import UrlShort, UserAgent
 
 
 class UrlView(View):
@@ -52,6 +52,14 @@ class GetLink(View):
         short_link = kwargs.get('short_link')
         long_url = UrlShort.objects.get(short_link=short_link)
         longurl = long_url.ori_link
+        usr_ip = request.META.get('REMOTE_ADDR')
+        usr_agent = request.META.get('HTTP_USER_AGENT')
+        user_info = UserAgent.objects.create(
+                              user_agent = usr_agent, 
+                              short_link = long_url,
+                              user_ip = usr_ip,
+                              user_national = 'No')
+        user_info.save()
         return HttpResponseRedirect(longurl)
 
 
