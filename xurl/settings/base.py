@@ -111,4 +111,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = "public/"
 STATICFILES_DIRS = ['static/']
-#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')

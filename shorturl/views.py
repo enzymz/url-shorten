@@ -40,6 +40,17 @@ class UrlView(View):
                                          short_link= shorten())
                     url_short.save()
 
+                    '''urlshort = UrlShort.objects.get(ori_link = url)
+                    usr_ip = request.META.get('REMOTE_ADDR')
+                    usr_agent = request.META.get('HTTP_USER_AGENT')
+
+                    geoip = GeoIP()
+                    user_info = UserAgent.objects.create(user_agent = usr_agent, 
+                                    short_link = urlshort,
+                                    user_ip = usr_ip,
+                        user_national = geoip.country(usr_ip))
+                    user_info.save()'''
+
                     short_link = url_short.short_link
                 return render(request, self.template_name, {'short_link': short_link})
             except:
@@ -57,12 +68,14 @@ class GetLink(View):
         usr_ip = request.META.get('REMOTE_ADDR')
         usr_agent = request.META.get('HTTP_USER_AGENT')
 
-        #geoip = GeoIP()
-        user_info = UserAgent.objects.create(
-                              user_agent = usr_agent, 
-                              short_link = long_url,
-                              user_ip = usr_ip,
-                    user_national = 'none')
+        geoip = GeoIP()
+        if geoip.country(usr_ip)['country_name'] == None:
+            usr_geo = 'Unknow'
+        else: usr_geo = geo.country(usr_ip)['country_name']
+        user_info = UserAgent.objects.create(user_agent = usr_agent, 
+                                    short_link = long_url,
+                                    user_ip = usr_ip,
+                        user_national = usr_geo)
         user_info.save()
         return HttpResponseRedirect(longurl)
 
