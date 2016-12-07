@@ -17,3 +17,6 @@ public/
 #database
 heroku.py
 local.py
+
+#swp file
+*.swp
