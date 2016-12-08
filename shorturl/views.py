@@ -5,6 +5,7 @@ from django.core.validators import URLValidator
 from django.contrib.sites.models import Site
 from django.contrib.gis.geoip import GeoIP
 from string import ascii_lowercase, ascii_uppercase, digits
+from django.core.mail import send_mail
 
 import hashlib
 import random
