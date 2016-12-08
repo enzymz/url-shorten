@@ -15,7 +15,7 @@ DATABASES = {
     }
 }
 
-DEBUG = False
+DEBUG = True
 
 ADMIN = [('Ha',os.environ.get('ADMIN_MAIL'))]
 
