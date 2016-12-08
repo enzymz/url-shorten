@@ -17,7 +17,7 @@ DATABASES = {
 
 DEBUG = False
 
-ADMIN = [('Ha','ADMIN_MAIL')]
+ADMIN = [('Ha',os.environ.get('ADMIN_MAIL'))]
 
 ALLOWED_HOSTS = ['url-shorten-6102.herokuapp.com']
 
