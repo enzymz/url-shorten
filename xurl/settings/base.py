@@ -118,4 +118,4 @@ EMAIL_HOST='smpt.gmail.com'
 EMAIL_HOST_USER=os.environ.get('ADMIN_MAIL')
 EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_PASSWORD')
 EMAIL_PORT=587
-EMAIL_BACKEND='django.core.mail.backend.smtp.EmailBackend'
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
