@@ -15,7 +15,6 @@ public/
 .ropeproject/
 
 #database
-heroku.py
 local.py
 
 #swp file
