@@ -32,29 +32,28 @@ class UrlView(View):
             val = URLValidator()
             try:
                 val(url)
-                if  UrlShort.objects.filter(ori_link=url).exists():
-                    short_link = UrlShort.objects.get(ori_link=url).short_link
-                else:
-                    url_short = UrlShort(ori_link  = url,
-                                         hash_link = shorter(url),
-                                         short_link= shorten())
-                    url_short.save()
+            except:
+                return HttpResponse('Invaild link')
+            if UrlShort.objects.filter(ori_link=url).exists():
+                short_link = UrlShort.objects.get(ori_link=url).short_link
+            else:
+                url_short = UrlShort(ori_link  = url,
+                                    hash_link = shorter(url),
+                                  short_link= shorten())
+                url_short.save()
 
-                    '''urlshort = UrlShort.objects.get(ori_link = url)
-                    usr_ip = request.META.get('REMOTE_ADDR')
-                    usr_agent = request.META.get('HTTP_USER_AGENT')
+                usr_ip = request.META.get('REMOTE_ADDR')
+                usr_agent = request.META.get('HTTP_USER_AGENT')
 
-                    geoip = GeoIP()
-                    user_info = UserAgent.objects.create(user_agent = usr_agent, 
+                geoip = GeoIP()
+                user_info = UserAgent.objects.create(user_agent = usr_agent, 
                                     short_link = urlshort,
                                     user_ip = usr_ip,
                         user_national = geoip.country(usr_ip))
-                    user_info.save()'''
+                user_info.save()
 
-                    short_link = url_short.short_link
+                short_link = url_short.short_link
                 return render(request, self.template_name, {'short_link': short_link})
-            except:
-                return HttpResponse('Invaild link')
 
         return render(request, self.template_name, {'form': form})
 
