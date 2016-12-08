@@ -41,19 +41,8 @@ class UrlView(View):
                                     hash_link = shorter(url),
                                   short_link= shorten())
                 url_short.save()
-
-                usr_ip = request.META.get('REMOTE_ADDR')
-                usr_agent = request.META.get('HTTP_USER_AGENT')
-
-                geoip = GeoIP()
-                user_info = UserAgent.objects.create(user_agent = usr_agent, 
-                                    short_link = urlshort,
-                                    user_ip = usr_ip,
-                        user_national = geoip.country(usr_ip))
-                user_info.save()
-
                 short_link = url_short.short_link
-                return render(request, self.template_name, {'short_link': short_link})
+            return render(request, self.template_name, {'short_link': short_link})
 
         return render(request, self.template_name, {'form': form})
 
