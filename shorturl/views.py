@@ -54,7 +54,12 @@ class GetLink(View):
         long_url = UrlShort.objects.get(short_link=short_link)
         longurl = long_url.ori_link
 
-        usr_ip = request.META.get('REMOTE_ADDR')
+        x_fordward_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_fordward_for:
+            usr_ip = x_fordward_for.split(',')[0]
+        else:
+            usr_ip = request.META.get('REMOTE_ADDR')
+
         usr_agent = request.META.get('HTTP_USER_AGENT')
 
         geoip = GeoIP()
