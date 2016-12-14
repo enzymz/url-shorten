@@ -80,14 +80,18 @@ class GetLink(View):
         user_info.save()
         return HttpResponseRedirect(longurl)
 
-from datetime import datetime
 class AgentList(APIView):
     def get(self, request):
        start = request.GET.get('start')
        end = request.GET.get('end')
-       useragent = UserAgent.objects.filter(date__range=[start, end])
-       usr_all = [i for i in useragent if i.user_national == 'Unknow']
-       return Response(usr_all)
+       useragent = UserAgent.objects.filter(date_create__range=[start, end])
+       list_nation = [i.user_national for i in useragent]
+       nation_dic = {}
+       for i in set(list_nation):
+           for c in list_nation:
+               nation_dic[i] = list_nation.count(i)
+       info = {'start': start, 'end': end,'countries': nation_dic, }
+       return Response(info)
 
 
 class AgentDetail():
