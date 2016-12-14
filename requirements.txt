@@ -3,3 +3,6 @@ django-extensions==0.4.1
 gunicorn==19.6.0
 psycopg2==2.6.2
 whitenoise==3.2.2
+djangorestframework==3.5.3
+django-filter==1.0.1
+Markdown==2.6.7
