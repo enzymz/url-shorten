@@ -72,7 +72,7 @@ class GetLink(View):
 
         geoip = GeoIP()
         if geoip.country(usr_ip)['country_name'] == None:
-            usr_geo = 'Unknow'
+            usr_geo = 'Unknown'
         else: usr_geo = geoip.country(usr_ip)['country_name']
         user_info = UserAgent.objects.create(user_agent = usr_agent, 
                              short_link = long_url, user_ip = usr_ip,
