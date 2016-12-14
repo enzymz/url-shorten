@@ -88,8 +88,7 @@ class AgentList(APIView):
        list_nation = [i.user_national for i in useragent]
        nation_dic = {}
        for i in set(list_nation):
-           for c in list_nation:
-               nation_dic[i] = list_nation.count(i)
+           nation_dic[i] = list_nation.count(i)
        info = {'start': start, 'end': end,'countries': nation_dic, }
        return Response(info)
 
