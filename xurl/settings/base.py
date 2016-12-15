@@ -30,9 +30,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.contenttypes',
+    'grappelli.dashboard',
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -122,3 +124,5 @@ EMAIL_PORT=587
 #EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 
 SITE_ID = 3
+
+GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
