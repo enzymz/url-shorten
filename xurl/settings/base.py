@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'shorturl',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +120,5 @@ EMAIL_HOST_USER=os.environ.get('ADMIN_MAIL')
 EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_PASSWORD')
 EMAIL_PORT=587
 #EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+
+SITE_ID = 3

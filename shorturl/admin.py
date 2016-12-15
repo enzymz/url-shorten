@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import UrlShort, UserAgent
+from shorturl.models import UrlShort, UserAgent
 from django.contrib.admin import AdminSite
+from django import forms
 
 
 class ShortAdmin(admin.ModelAdmin):
@@ -8,7 +9,10 @@ class ShortAdmin(admin.ModelAdmin):
 
 
 class UserAgentAdmin(admin.ModelAdmin):
-   pass
+    list_display = ['date_create']
+    fields = ('user_agent', 'short_link', 'user_ip',
+              'user_national','date_create')
+    readonly_fields = ('date_create',)
 
 
 admin.site.register(UrlShort, ShortAdmin)

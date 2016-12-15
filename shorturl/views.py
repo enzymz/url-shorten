@@ -4,14 +4,18 @@ from django.views import View
 from django.core.validators import URLValidator
 from django.contrib.sites.models import Site
 from django.contrib.gis.geoip import GeoIP
+from datetime import date
 from string import ascii_lowercase, ascii_uppercase, digits
 from django.core.mail import send_mail
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 import hashlib
 import random
 
-from .forms import UrlForm
-from .models import UrlShort, UserAgent
+from shorturl.forms import UrlForm
+from shorturl.models import UrlShort, UserAgent
+from shorturl.serializers import AgentSerializers
 
 
 class UrlView(View):
@@ -37,13 +41,17 @@ class UrlView(View):
                 return HttpResponse('Invaild link')
             if UrlShort.objects.filter(ori_link=url).exists():
                 short_link = UrlShort.objects.get(ori_link=url).short_link
+                #full_link = domain + '/shorturl/' + short_link
+
             else:
                 url_short = UrlShort(ori_link  = url,
                                     hash_link = shorter(url),
                                   short_link= shorten())
                 url_short.save()
+                domain = get_domain()
                 short_link = url_short.short_link
-            return render(request, self.template_name, {'short_link': short_link})
+                #full_link = domain + '/shorturl/' + short_link
+            return render(request, self.template_name, {'short_link': short_link}) # 'full_link': full_link -> context
 
         return render(request, self.template_name, {'form': form})
 
@@ -67,17 +75,27 @@ class GetLink(View):
             usr_geo = 'Unknow'
         else: usr_geo = geoip.country(usr_ip)['country_name']
         user_info = UserAgent.objects.create(user_agent = usr_agent, 
-                                    short_link = long_url,
-                                    user_ip = usr_ip,
-                        user_national = usr_geo)
+                             short_link = long_url, user_ip = usr_ip,
+                     user_national = usr_geo, date_create = date.today())
         user_info.save()
         return HttpResponseRedirect(longurl)
 
+from datetime import datetime
+class AgentList(APIView):
+    def get(self, request):
+       start = request.GET.get('start')
+       end = request.GET.get('end')
+       useragent = UserAgent.objects.filter(date__range=[start, end])
+       usr_all = [i for i in useragent if i.user_national == 'Unknow']
+       return Response(usr_all)
+
+
+class AgentDetail():
+    pass
 
 def shorter(url):
     code_hash = hashlib.sha256(url.encode()).hexdigest()
     return code_hash
-
 
 def shorten():
     flag = True

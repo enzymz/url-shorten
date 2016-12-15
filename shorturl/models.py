@@ -13,6 +13,7 @@ class UserAgent(models.Model):
    short_link = models.ForeignKey(UrlShort)
    user_ip = models.CharField(max_length=50)
    user_national = models.CharField(max_length=50)
-
+   date_create = models.DateField(auto_now=True)
+ 
    def __str__(self):
        return self.user_ip
