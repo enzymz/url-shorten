@@ -7,77 +7,86 @@
     <link herf="#" rel="stylesheet">
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
     <script src="{% static "dash/Chart.js" %}" type="text/javascript"></script>
-    <canvas id="myChart" width="400" height="400"></canvas>
  
- 
- 	<style>
-		#myChart {
-			width: 500px !important;
-			height: 500px !important;
-		}
-	
-	</style>
- 
+ 	  <style>
+		  #myChart {
+			  width: 400px !important;
+			  height: 400px !important;
+        font-size: 15px;
+		  }
+	  </style>
+    <style type="text/css">
+      #body {
+        font-size: 20px;
+      }
+    </style>
   </head>
-  <body>
-    <input type="date" id="start_date">
-    <input type="date" id="end_date" >
-    <input type="button" value="Chart" onClick="getChart()">
-    <script type="text/javascript">
+  <body id="body">
+    <div class="container">
+      <div class="column-left"></div>
+      <div class="column-center">
+        <canvas id="myChart" width="400" height="400" ></canvas>
+        <input type="date" id="start_date" defaultValue="2016-11-01">
+        <input type="date" id="end_date"  >
+        <input type="button" value="Chart" onClick="getChart()">
+        <script type="text/javascript">
      
-    </script>
-    <script>
-    function getChart() {
-      var start = document.getElementById("start_date").value;
-      var end = document.getElementById("end_date").value;
-      $(document).ready(function(){
-        $.ajax({
-	        dataType: "json",
-	        url: "/shorturl/api/?end="+end+"&format=json&start="+start,
-	        success: function (data) {
-            console.log(data['countries']);
-            items_label = [];
-            items_value = [];
-            $.each(data['countries'], function(label, value){
-              items_label.push(label)
-              items_value.push(value)
-            })
-            var ctx = document.getElementById("myChart");
-            var myDoughnutChar = new Chart(ctx, {
-                type: 'doughnut',
-		            data: {
-                  labels: items_label,
-                  datasets: [{
-                    data: items_value,
-                    backgroundColor: listColors(),
-	                  hoverBackgroundColor: ["#FFA900", "#ABC546", "#CF0967"]
-                  }]
-		            },		 
-		            options: {
-		              cutoutPercentage: 0
-		            }
-	          });
-          }
-        });
-      });
-      function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++ ) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-      }
+        </script>
+        <script>
+          function getChart() {
+            var start = document.getElementById("start_date").value;
+              var end = document.getElementById("end_date").value;
+              $(document).ready(function(){
+                $.ajax({
+	                dataType: "json",
+	                url: "/shorturl/api/?end="+end+"&format=json&start="+start,
+	                success: function (data) {
+                    console.log(data['countries']);
+                    items_label = [];
+                    items_value = [];
+                    $.each(data['countries'], function(label, value){
+                      items_label.push(label)
+                      items_value.push(value)
+                    })
 
-      function listColors() {
-        var color = [];
-        for (var i = 0; i < items_label.length; i++) {
-          color.push(getRandomColor());
+                    Chart.defaults.global.defaultFontSize = 15
+                    var ctx = document.getElementById("myChart");
+                    ctx.font = "15px";
+                    var myDoughnutChar = new Chart(ctx, {
+                      type: 'doughnut',
+		                  data: {
+                        labels: items_label,
+                        datasets: [{
+                          data: items_value,
+                          backgroundColor: listColors(),
+	                      }]
+		                  },		 
+		                  options: {
+		                  cutoutPercentage: 50,
+		                  }
+	                 });
+                  }
+                });
+              });
+          function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          }
+
+          function listColors() {
+            var color = [];
+            for (var i = 0; i < items_label.length; i++) {
+              color.push(getRandomColor());
+            }
+          return color;
+          }
         }
-      return color;
-      }
-    }
-    </script>
-    
+        </script>
+      </div>
+    </div>
   </body>
 </html>
