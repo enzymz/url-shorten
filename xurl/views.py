@@ -5,4 +5,4 @@ from django.http import HttpResponse
 from django.http import HttpResponse
 
 class ChartForm(TemplateView):
-    template_name = 'dash/dash.html'
+    template_name = 'dash/index.html'

@@ -52,12 +52,12 @@ class CustomIndexDashboard(Dashboard):
         ))
         '''
         # append an app list module for "Administration"
-        self.children.append(modules.ModelList(
+        '''self.children.append(modules.ModelList(
             _('ModelList: Administration'),
             column=1,
             collapsible=False,
             models=('django.contrib.*',),
-        ))
+        ))'''
         
         # append another link list module for "support".
         self.children.append(modules.LinkList(
@@ -83,37 +83,14 @@ class CustomIndexDashboard(Dashboard):
                     'external': True,
                 },
                 {
-                    'title': _('Grappelli Documentation'),
-                    'url': 'http://packages.python.org/django-grappelli/',
-                    'external': True,
-                },
-                {
-                    'title': _('Grappelli Google-Code'),
-                    'url': 'http://code.google.com/p/django-grappelli/',
-                    'external': True,
-                },
-                {
                     'title': _('Chart'),
                     'url': '/chart/',
                     'external': True,
                 },
+                {
+                    'title': _('Test'),
+                    'url': '/test',
+                    'external': True,
+                }
             ]
         ))
-        
-        # append a feed module
-        self.children.append(modules.Feed(
-            _('Latest Django News'),
-            column=2,
-            feed_url='http://www.djangoproject.com/rss/weblog/',
-            limit=5
-        ))
-        
-        # append a recent actions module
-        self.children.append(modules.RecentActions(
-            _('Recent Actions'),
-            limit=5,
-            collapsible=False,
-            column=3,
-        ))
-
-

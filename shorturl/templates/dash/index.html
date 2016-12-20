@@ -1,0 +1,100 @@
+{% load static %}
+</!DOCTYPE html>
+<html>
+<head>
+    <title>Manual</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/dash.css" %}">
+    <link href="{% static "dist/css/bootstrap.min.css" %}" rel="stylesheet">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src="{% static "dash/Chart.js" %}"></script>
+</head>
+<body id="body" >
+ <div id="main" style="background-image: url('{% static 'imgs/bg-chart.jpg' %}')">
+    <div id="head" style="background-image: url('{% static '/imgs/banner.png' %}')"></div>
+    <div id="head-link" class="navbar-collapse collapse" >
+      <ul>
+        <li><a href="/chart"> Dashboard </a></li>
+        <li><a href="/admin"> Admin </a></li>
+        <li><a href="/shorturl"> Shorten </a></li>
+        <!--<li><a href="#"> Contact </a></li>-->
+      </ul>
+    </div>
+    <div id="left">
+      <ul>
+        <li><a href="#"> Geolocation </a></li>
+        <li><a href="#"> >>> </a> </li>
+        <li><a href="#"> <<< </a></li>	
+      </ul>
+    </div>
+    <div id="content">
+      <canvas id="myChart" width="400" height="640"></canvas>
+      <script>
+      function getChart() {
+        var start = document.getElementById("start_date").value;
+        var end = document.getElementById("end_date").value;
+        
+        $(document).ready(function(){
+          $.ajax({
+            dataType: "json",
+            url: "/shorturl/api/?end="+end+"&format=json&start="+start,
+            success: function (data) {
+              console.log(data['countries']);
+              items_label = [];
+              items_value = [];
+              
+              $.each(data['countries'], function(label, value){
+                      items_label.push(label)
+                      items_value.push(value)
+              })
+
+              Chart.defaults.global.defaultFontSize = 15
+              var ctx = document.getElementById("myChart");
+              var myDoughnutChar = new Chart(ctx, {
+                type: 'doughnut',
+                animation:{
+                  animationScale: '#',
+                },
+                data: {
+                  labels: items_label,
+                  datasets: [{
+                    data: items_value,
+                    backgroundColor: listColors(),
+                  }]
+                },     
+                options: {
+                  cutoutPercentage: 50,
+                }
+              });
+            }
+          });
+        });
+         
+        function getRandomColor() {
+          var letters = '0123456789ABCDEF';
+          var color = '#';
+          for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+          return color;
+        }
+
+        function listColors() {
+          var color = [];
+          for (var i = 0; i < items_label.length; i++) {
+            color.push(getRandomColor());
+          }
+          return color;
+        }
+      }
+      </script>
+    </div>
+    <div id="right">
+      <div class="start"> Start date <input type="date" id="start_date" > </div>
+      <div class="end"> End date <input type="date" id="end_date" ></div>
+      <div class="btn"> <input type="button" value="Submit" onClick="getChart()"></div>
+    </div>
+    <div id="footer">
+    </div>
+  </div>
+</body>
+</html>
