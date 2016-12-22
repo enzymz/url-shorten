@@ -2,7 +2,6 @@
 	font-family: Arial, Tahoma;
 	font-size: 14px;
 	opacity: 0.8;
-	color: white;
 }
 .body-img {
 
@@ -52,6 +51,7 @@
 	padding: 0;
 	background-color: #333;	
 }
+
 #left{
 	width: 240px;
 	height: 400px;
@@ -96,7 +96,7 @@
 	margin-bottom:  10px;
 	margin-left: 1px;
 	float: right;
-	opacity: 1.1;
+	opacity: 1;
 	color: white;
 }
 #right input {

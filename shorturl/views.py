@@ -22,8 +22,6 @@ class UrlView(View):
     """docstring"""
     form_class = UrlForm
     template_name = 'shorturl/short.html'
-    show = 'shorturl/show.html'
-
     def get(self, request):
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
