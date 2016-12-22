@@ -7,6 +7,7 @@
     <link rel="icon" href="{% static "icons/url.png" %}">
     <link href="{% static "dist/css/bootstrap.min.css" %}" rel="stylesheet">
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src="{% static "dist/js/clipboard.min.js" %}"></script>
     <script src="{% static "dash/Chart.js" %}"></script>
   </head>
 
@@ -22,6 +23,18 @@
       </div>
       <div id="left"></div>
       <div id="content">
+        <script>
+          function full_path() {
+            var full_link = window.location.href + '{{ short_link }}';
+
+            $('.short').find('a').html(full_link);
+          }
+
+          $(document).ready(function() {
+            console.log(full_path());
+            full_path();
+          });
+        </script> 
         <div class="short">
           <h1 style="color: white;"> Shorten your link </h1>
           {% if form %}
@@ -32,8 +45,8 @@
             <input type="submit", value="Shorten" style="font-size: 15px;" /><br/>
           </form>
           {% endif %}
-          {% if short_link %} 
-            <a href="{{ short_link }}" style="color: #00ff55">{{ full_link }}</a>
+          {% if short_link %}
+            <a href="{{ short_link }}" style="color: orange"></a>
           {% endif %}
         </div>
       </div>
