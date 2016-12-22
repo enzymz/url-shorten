@@ -1,80 +1,45 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+</!DOCTYPE html>
+<html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Shorten</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/dash.css" %}">
     <link rel="icon" href="{% static "icons/url.png" %}">
-
-    <title>Shorten Link</title>
-
     <link href="{% static "dist/css/bootstrap.min.css" %}" rel="stylesheet">
-
-    <link href="{% static "assets/css/ie10-viewport-bug-workaround.css" %}" rel="stylesheet">
-
-    <link href="{% static "css/cover.css" %}" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static "shorturl/css/shorturl.css" %}">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="{% static "assets/js/ie-emulation-modes-warning.js" %}"></script>
-    <script src="{% static "shorturl/js/copy.js" %}"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src="{% static "dash/Chart.js" %}"></script>
   </head>
 
-  <body class="body-class" style="background-image: url('{% static "imgs/bg-home-resize.jpg" %}')">
-
-    <div class="site-wrapper">
-
-      <div class="site-wrapper-inner">
-
-        <div class="cover-container">
-
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">Simple is better than complex</h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                  <li class="active"><a href="">Shorten</a></li>
-                  <li><a href="https://vicare.vn">Vicare</a></li>
-                  <li><a href="#">Contact</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-
-          <div class="inner cover">
-            <h1 class="cover-heading">Shorten your link</h1>
-            {% if form %}
-				<form action="" method="post" class="form-render">
-					{% csrf_token %}
-					<labe for ="{{ form.link.id_for_label }}">LINK</label>
-					{{ form.link }}
-					<input type="submit", value="Shorten" /><br/>
-				</form>
-			{% endif %}
-			{% if short_link %}	
-				<a href="{{ short_link }}" >{{ short_link }}</a>
-			{% endif %}
-            </p>
-          </div>
-
-          <div class="mastfoot">
-            <div class="inner">
-            </div>
-          </div>
-
-        </div>
-
+  <body id="body" >
+    <div id="main" style="background-image: url('{% static 'imgs/bg-chart.jpg' %}')">
+      <div id="head" style="background-image: url('{% static '/imgs/banner.png' %}')"></div>
+      <div id="head-link">
+        <ul>
+          <li><a href="#"> Contact </a></li>
+          <li><a href="/admin"> Admin </a></li>
+          <li class="active"><a href="/shorturl"> Shorten </a></li>
+        </ul>
       </div>
-
+      <div id="left"></div>
+      <div id="content">
+        <div class="short">
+          <h1 style="color: white;"> Shorten your link </h1>
+          {% if form %}
+          <form action="" method="post" class="form-render">
+            {% csrf_token %}
+            <label for ="{{ form.link.id_for_label }}" style="color: white;">Link</label>
+            {{ form.link }}
+            <input type="submit", value="Shorten" style="font-size: 15px;" /><br/>
+          </form>
+          {% endif %}
+          {% if short_link %} 
+            <a href="{{ short_link }}" style="color: #00ff55">{{ full_link }}</a>
+          {% endif %}
+        </div>
+      </div>
+      <div id="right"></div>
+      <div id="footer"></div>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
   </body>
-</html>
+
+</html>         

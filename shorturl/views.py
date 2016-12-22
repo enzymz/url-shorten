@@ -41,7 +41,7 @@ class UrlView(View):
                 return HttpResponse('Invaild link')
             if UrlShort.objects.filter(ori_link=url).exists():
                 short_link = UrlShort.objects.get(ori_link=url).short_link
-                #full_link = domain + '/shorturl/' + short_link
+                full_link = get_domain() + '/shorturl/' + short_link
 
             else:
                 url_short = UrlShort(ori_link  = url,
@@ -50,8 +50,8 @@ class UrlView(View):
                 url_short.save()
                 domain = get_domain()
                 short_link = url_short.short_link
-                #full_link = domain + '/shorturl/' + short_link
-            return render(request, self.template_name, {'short_link': short_link}) # 'full_link': full_link -> context
+                full_link = get_domain() + '/shorturl/' + short_link
+            return render(request, self.template_name, {'short_link': short_link, 'full_link': full_link}) # 'full_link': full_link -> context
 
         return render(request, self.template_name, {'form': form})
 

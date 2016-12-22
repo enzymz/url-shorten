@@ -4,6 +4,7 @@
 <head>
     <title>Manual</title>
     <link rel="stylesheet" type="text/css" href="{% static "css/dash.css" %}">
+    <link rel="icon" href="{% static "icons/chart-icon.jpg" %}">
     <link href="{% static "dist/css/bootstrap.min.css" %}" rel="stylesheet">
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
     <script src="{% static "dash/Chart.js" %}"></script>
@@ -13,10 +14,9 @@
     <div id="head" style="background-image: url('{% static '/imgs/banner.png' %}')"></div>
     <div id="head-link" class="navbar-collapse collapse" >
       <ul>
-        <li><a href="/chart"> Dashboard </a></li>
-        <li><a href="/admin"> Admin </a></li>
         <li><a href="/shorturl"> Shorten </a></li>
-        <!--<li><a href="#"> Contact </a></li>-->
+        <li><a href="/admin"> Admin </a></li>
+        <li><a href="/chart"> Dashboard </a></li>
       </ul>
     </div>
     <div id="left">
